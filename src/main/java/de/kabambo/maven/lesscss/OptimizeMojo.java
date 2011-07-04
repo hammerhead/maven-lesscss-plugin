@@ -105,6 +105,9 @@ public class OptimizeMojo extends AbstractMojo {
 
         BufferedWriter out = null;
         try {
+            // Make sure target file exists before writing
+            outputFile.createNewFile();
+
             out = new BufferedWriter(new FileWriter(outputFile));
             out.write(s.toString());
             out.close();
