@@ -11,7 +11,8 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <compileSource>1.6</compileSource>
+    <compile.source>1.6</compile.source>
+    <compile.target>1.6</compile.target>
   </properties>
 
   <dependencies>
@@ -35,8 +36,8 @@
         <artifactId>maven-compiler-plugin</artifactId>
         <version>2.3.2</version>
         <configuration>
-          <source>${compileSource}</source>
-          <target>${compileSource}</target>
+          <source>${compile.source}</source>
+          <target>${compile.target}</target>
           <encoding>${project.build.sourceEncoding}</encoding>
         </configuration>
       </plugin>
