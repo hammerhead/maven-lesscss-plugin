@@ -27,7 +27,6 @@ import java.net.URL;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.apache.commons.io.IOUtils;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 
@@ -103,18 +102,13 @@ public class OptimizeMojo extends AbstractMojo {
             s.append(convertFile(file));
         }
 
-        BufferedWriter out = null;
-        try {
+        try (BufferedWriter out = new BufferedWriter(new FileWriter(outputFile))) {
             // Make sure target file exists before writing
             outputFile.createNewFile();
-
-            out = new BufferedWriter(new FileWriter(outputFile));
             out.write(s.toString());
             out.close();
         } catch (IOException e) {
             throw new MojoExecutionException("Failed to write file.", e);
-        } finally {
-            IOUtils.closeQuietly(out);
         }
     }
 
@@ -138,19 +132,15 @@ public class OptimizeMojo extends AbstractMojo {
                 "Failed to wait for process to terminate.", e);
         }
 
-        BufferedReader stream = new BufferedReader(new InputStreamReader(
-            p.getInputStream()));
         StringBuffer css = new StringBuffer();
-        String currentLine;
-        try {
+        try (BufferedReader stream = new BufferedReader(new InputStreamReader(
+                p.getInputStream()))) {
+            String currentLine;
             while ((currentLine = stream.readLine()) != null) {
                 css.append(currentLine);
             }
-            stream.close();
         } catch (IOException e) {
             throw new MojoExecutionException("Stream exited unexpectedly.", e);
-        } finally {
-            IOUtils.closeQuietly(stream);
         }
 
         return css.toString();
