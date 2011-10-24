@@ -155,7 +155,7 @@ public class OptimizeMojo extends AbstractMojo {
      */
     private Process buildProcess(final File file) throws
             MojoExecutionException {
-        List<String> args = new LinkedList<String>();
+        List<String> args = new LinkedList<>();
 
         args.add(lessCompiler.getPath());
         args.add(file.getPath());
