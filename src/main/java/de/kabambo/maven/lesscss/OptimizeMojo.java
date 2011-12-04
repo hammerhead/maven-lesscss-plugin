@@ -85,6 +85,7 @@ public class OptimizeMojo extends AbstractMojo {
      *
      * @throws MojoExecutionException In case execution failed
      */
+    @Override
     public void execute() throws MojoExecutionException {
         if (!inputDirectory.exists()) {
             throw new MojoExecutionException(String.format(
