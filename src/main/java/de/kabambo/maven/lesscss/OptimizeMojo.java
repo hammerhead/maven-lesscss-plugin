@@ -73,6 +73,13 @@ public class OptimizeMojo extends AbstractMojo {
      */
     private static final String LESS_SUFFIX = ".less";
 
+    private static class LessCssFilenameFilter implements FilenameFilter {
+        @Override
+        public boolean accept(final File dir, final String name) {
+            return name.endsWith(LESS_SUFFIX);
+        }
+    }
+
     /**
      * Executes the MoJo.
      *
@@ -91,11 +98,8 @@ public class OptimizeMojo extends AbstractMojo {
                     getAbsolutePath()));
         }
 
-        File[] containedFiles = inputDirectory.listFiles(new FilenameFilter() {
-            public boolean accept(final File dir, final String name) {
-                return name.endsWith(LESS_SUFFIX);
-            }
-        });
+        File[] containedFiles = inputDirectory.listFiles(
+            new LessCssFilenameFilter());
 
         StringBuffer s = new StringBuffer();
         for (File file : containedFiles) {
